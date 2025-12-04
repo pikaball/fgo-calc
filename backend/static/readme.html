@@ -1,0 +1,13 @@
+<script src="https://cdn.jsdelivr.net/npm/markdown-it/dist/markdown-it.min.js"></script>
+
+<div id="content"></div>
+
+<script>
+const md = window.markdownit();
+
+fetch("/static/README.md")
+  .then(res => res.text())
+  .then(text => {
+    document.getElementById("content").innerHTML = md.render(text);
+  });
+</script>

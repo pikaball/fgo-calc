@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FGO 最优羁绊组队求解器</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
+    <style>
+        :root {
+            --pico-font-size: 100%;
+        }
+        body {
+            padding: 2rem;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+        .grid {
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 0.5rem;
+        }
+        .avatar-container {
+            position: relative;
+            cursor: pointer;
+        }
+        .avatar-container img {
+            width: 80px;
+            height: 80px;
+            border-radius: var(--pico-border-radius);
+            display: block;
+        }
+        .avatar-container .name {
+            font-size: 0.75rem;
+            text-align: center;
+            word-break: break-all;
+        }
+        .avatar-container .contribution {
+            font-size: 0.7rem;
+            text-align: center;
+            color: var(--pico-primary);
+            font-weight: bold;
+        }
+        .avatar-container .remove-btn {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            line-height: 1;
+        }
+        .result-avatar-overlay {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .result-avatar-overlay button {
+            width: 24px;
+            height: 24px;
+            font-size: 14px;
+            padding: 0;
+            margin: 0;
+        }
+        dialog .grid {
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+        .team-result {
+            border: 1px solid var(--pico-primary-border);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: var(--pico-border-radius);
+        }
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1rem;
+        }
+        .placeholder {
+            width: 80px;
+            height: 80px;
+            border: 2px dashed var(--pico-muted-border-color);
+            border-radius: var(--pico-border-radius);
+        }
+        #trait-modal > article {
+            max-width: 90ch;
+        }
+
+        @media (max-width: 768px) {
+            .team-grid {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            }
+            .result-avatar-overlay {
+                flex-direction: row;
+                top: auto;
+                bottom: 2px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(0,0,0,0.5);
+                border-radius: 5px;
+                padding: 2px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <h1>FGO 最优羁绊组队求解器</h1>
+
+        <article>
+            <details open>
+                <summary>💡 Hint</summary>
+                <ul>
+                    <li>本项目已开源：<a href="https://github.com/pikaball/fgo-calc/">github</a></li>
+                    <li>计算时不考虑：助战加成、活动加成、前排加成</li>
+                    <li>冠位战情形：可以将cost+12并设置礼装数为6，筛选特性为对应职阶，基础羁绊4000左右</li>
+                    <li>带非羁绊加成礼装（黑杯等）情形：减掉相应cost和礼装数</li>
+                </ul>
+            </details>
+        </article>
+
+        <article>
+            <header>限制条件</header>
+            <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                <label>
+                    Cost 上限
+                    <input type="number" id="cost-limit" value="116">
+                </label>
+                <label>
+                    从者数量上限
+                    <input type="number" id="svt-limit" value="5" max="5" min="1">
+                </label>
+                <label>
+                    礼装数量上限
+                    <input type="number" id="ce-limit" value="5" max="5" min="1">
+                </label>
+                <label>
+                    基础羁绊值
+                    <input type="number" id="base-bond" value="1000">
+                </label>
+            </div>
+
+            <hgroup>
+                <h6>特性筛选 (AND)</h6>
+                <p>在下方选择特性后，将只在符合所有已选特性的从者中进行计算。</p>
+            </hgroup>
+           <button class="outline" onclick="openTraitModal()">＋ 选择特性</button>
+           <div style="margin: .5rem 0;">
+               <strong>已选特性:</strong>
+               <div id="selected-traits" class="grid" style="grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));"></div>
+           </div>
+
+            <h6>从者限制</h6>
+            <strong>必选从者:</strong>
+            <div class="grid" id="include-svt-list"></div>
+            <button class="outline" onclick="openModal('svt', 'include')">＋ 添加必选从者</button>
+            <br><br>
+            <strong>排除从者:</strong>
+            <div class="grid" id="exclude-svt-list"></div>
+            <button class="outline" onclick="openModal('svt', 'exclude')">＋ 添加排除从者</button>
+
+            <h6>礼装限制</h6>
+            <strong>必选礼装:</strong>
+            <div class="grid" id="include-ce-list"></div>
+            <button class="outline" onclick="openModal('ce', 'include')">＋ 添加必选礼装</button>
+            <br><br>
+            <strong>排除礼装:</strong>
+            <div class="grid" id="exclude-ce-list"></div>
+            <button class="outline" onclick="openModal('ce', 'exclude')">＋ 添加排除礼装</button>
+
+            <footer>
+                <button id="calculate-btn" onclick="calculate()">开始计算</button>
+            </footer>
+        </article>
+
+        <article id="results-container" hidden>
+            <header>计算结果</header>
+            <div id="results-list"></div>
+        </article>
+
+        <dialog id="svt-diff-modal">
+            <article>
+                <header>
+                    <a href="#close" aria-label="Close" class="close" onclick="closeSvtDiffModal()"></a>
+                    <span id="svt-diff-modal-title">选择从者形态</span>
+                </header>
+                <div id="svt-diff-modal-grid" class="grid"></div>
+                <footer>
+                    <button class="secondary" onclick="closeSvtDiffModal()">取消</button>
+                </footer>
+            </article>
+        </dialog>
+
+        <footer style="text-align: center; margin-top: 2rem;">
+            <img src="/static/author.png" alt="author avatar" style="width: 60px; height: 60px; border-radius: 50%;">
+            <p style="margin: 0.5rem 0 0;">
+                <strong>pikaball</strong>
+            </p>
+            <p style="margin: 0.25rem 0;">
+                <a href="https://github.com/pikaball" target="_blank">GitHub</a> | 
+                <a href="https://pikaball.cc" target="_blank">Blog</a> | 
+                <a href="https://space.bilibili.com/3546788520790068" target="_blank">Bilibili</a>
+            </p>
+        </footer>
+    </main>
+
+    <dialog id="trait-modal">
+        <article>
+            <header>
+                <a href="#close" aria-label="Close" class="close" onclick="closeTraitModal()"></a>
+                <span>选择特性</span>
+            </header>
+            <input type="search" id="trait-modal-search" placeholder="搜索特性名称...">
+            <div id="trait-modal-grid" class="grid" style="max-height: 60vh; overflow-y: auto; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));"></div>
+            <footer>
+                <button class="secondary" onclick="closeTraitModal()">关闭</button>
+            </footer>
+        </article>
+    </dialog>
+
+    <dialog id="svt-trait-display-modal">
+        <article>
+            <header>
+                <a href="#close" aria-label="Close" class="close" onclick="closeSvtTraitDisplayModal()"></a>
+                <span id="svt-trait-display-title">从者特性</span>
+            </header>
+            <div id="svt-trait-display-list" style="max-height: 60vh; overflow-y: auto;"></div>
+            <footer>
+                <button class="secondary" onclick="closeSvtTraitDisplayModal()">关闭</button>
+            </footer>
+        </article>
+    </dialog>
+
+    <dialog id="add-modal">
+        <article>
+            <header>
+                <a href="#close" aria-label="Close" class="close" onclick="closeModal()"></a>
+                <span id="modal-title"></span>
+            </header>
+            <input type="search" id="modal-search" placeholder="搜索名称...">
+            <div id="modal-grid" class="grid"></div>
+            <footer>
+                <button class="secondary" onclick="closeModal()">关闭</button>
+            </footer>
+        </article>
+    </dialog>
+
+    <script>
+        let ALL_DATA = { servants: [], craftEssences: [], traits: {} };
+        let SELECTIONS = {
+            includeSvt: new Map(),
+            excludeSvt: new Set(),
+            includeCe: new Set(),
+            excludeCe: new Set(),
+            allowTraits: new Set()
+        };
+        let currentModal = { type: '', list: '' };
+
+        // --- 数据加载与初始化 ---
+        window.onload = async () => {
+            try {
+                const response = await fetch('/api/data');
+                ALL_DATA = await response.json();
+                ALL_DATA.servants.sort((a, b) => a.id - b.id);
+                ALL_DATA.craftEssences.sort((a, b) => a.id - b.id);
+               renderSelectedTraits();
+               document.getElementById('trait-modal-search').addEventListener('input', (e) => {
+                   populateTraitModalGrid(e.target.value);
+               });
+            } catch (error) {
+                console.error('Failed to load data:', error);
+                alert('数据加载失败，请检查后端服务是否正常。');
+            }
+        };
+
+        // 已选特性渲染（可直接取消）
+        function renderSelectedTraits() {
+            const sel = document.getElementById('selected-traits');
+            sel.innerHTML = '';
+            const items = [...SELECTIONS.allowTraits].map(id => [id, ALL_DATA.traits[id]]).filter(([,name]) => name && name.trim().length > 0);
+            items.sort(([,a],[,b]) => a.localeCompare(b, 'zh-Hans-CN'));
+            for (const [id, name] of items) {
+                const label = document.createElement('label');
+                const input = document.createElement('input');
+                input.type = 'checkbox';
+                input.checked = true;
+                input.onchange = (e) => {
+                    if (!e.target.checked) {
+                        SELECTIONS.allowTraits.delete(Number(id));
+                        renderSelectedTraits();
+                        // 如果特性弹窗是打开的，同步更新其中的勾选框
+                        const traitCheckbox = document.querySelector(`#trait-modal-grid input[data-id='${id}']`);
+                        if (traitCheckbox) {
+                            traitCheckbox.checked = false;
+                        }
+                    }
+                };
+                label.appendChild(input);
+                label.append(` ${name}`);
+                sel.appendChild(label);
+            }
+        }
+
+        // 可搜索的特性筛选（不再一次性全部渲染）
+        function renderTraitFilters(filter = '') {
+            const container = document.getElementById('trait-filter-container');
+            container.innerHTML = '';
+            const q = (filter || '').trim().toLowerCase();
+            if (q.length === 0) {
+                const hint = document.createElement('small');
+                hint.style.opacity = '0.8';
+                hint.textContent = '在上方搜索框中输入以查找特性。';
+                container.appendChild(hint);
+                return;
+            }
+            const selected = new Set([...SELECTIONS.allowTraits].map(Number));
+            const candidates = Object.entries(ALL_DATA.traits)
+                .filter(([, name]) => name && name.trim().length > 0) // 过滤空名称
+                .filter(([, name]) => name.toLowerCase().includes(q))
+                .filter(([id]) => !selected.has(Number(id))); // 已选的不再重复出现在结果里
+            candidates.sort(([,a],[,b]) => a.localeCompare(b, 'zh-Hans-CN'));
+            for (const [id, name] of candidates) {
+                const label = document.createElement('label');
+                const input = document.createElement('input');
+                input.type = 'checkbox';
+                input.dataset.id = id;
+                input.checked = false;
+                input.onchange = (e) => {
+                    if (e.target.checked) {
+                        SELECTIONS.allowTraits.add(Number(id));
+                    } else {
+                        SELECTIONS.allowTraits.delete(Number(id));
+                    }
+                    renderSelectedTraits();
+                };
+                label.appendChild(input);
+                label.append(` ${name}`);
+                container.appendChild(label);
+            }
+            if (candidates.length === 0) {
+                const hint = document.createElement('small');
+                hint.style.opacity = '0.8';
+                hint.textContent = '无匹配特性';
+                container.appendChild(hint);
+            }
+        }
+
+        // --- 弹窗逻辑 ---
+        function openModal(type, list) {
+            currentModal = { type, list };
+            document.getElementById('modal-title').textContent = `添加${list === 'include' ? '必选' : '排除'}${type === 'svt' ? '从者' : '礼装'}`;
+            document.getElementById('modal-search').value = '';
+            populateModalGrid();
+            document.getElementById('add-modal').showModal();
+        }
+
+        function closeModal() {
+            document.getElementById('add-modal').close();
+        }
+
+        function openTraitModal() {
+            populateTraitModalGrid();
+            document.getElementById('trait-modal').showModal();
+        }
+
+        function closeTraitModal() {
+            document.getElementById('trait-modal').close();
+        }
+
+        function openSvtDiffModal(svt) {
+            const grid = document.getElementById('svt-diff-modal-grid');
+            grid.innerHTML = '';
+            document.getElementById('svt-diff-modal-title').textContent = `为 ${svt.name} 选择形态`;
+
+            for (const [diffKey, detail] of Object.entries(svt.diff)) {
+                const name = detail.name === '默认' ? svt.name : `${svt.name} (${detail.name})`;
+                const div = createAvatar(svt.id, name, detail.img, () => {
+                    addSvtWithDiff(svt.id, diffKey);
+                });
+                grid.appendChild(div);
+            }
+            document.getElementById('svt-diff-modal').showModal();
+        }
+
+        function closeSvtDiffModal() {
+            document.getElementById('svt-diff-modal').close();
+        }
+
+
+        function showSvtTraits(svt, diffKey) {
+            const detail = svt.diff[diffKey];
+            const title = document.getElementById('svt-trait-display-title');
+            const list = document.getElementById('svt-trait-display-list');
+            
+            title.textContent = `${svt.name} (${detail.name}) 的特性`;
+            list.innerHTML = '';
+
+            if (detail.traits && detail.traits.length > 0) {
+                const traitNames = detail.traits
+                    .map(id => ALL_DATA.traits[id])
+                    .filter(name => name && name.trim())
+                    .sort((a, b) => a.localeCompare(b, 'zh-Hans-CN'));
+                
+                traitNames.forEach(name => {
+                    const p = document.createElement('p');
+                    p.textContent = name;
+                    p.style.margin = '0.5rem 0';
+                    list.appendChild(p);
+                });
+            } else {
+                list.innerHTML = '<p>无特殊特性。</p>';
+            }
+
+            document.getElementById('svt-trait-display-modal').showModal();
+        }
+
+        function closeSvtTraitDisplayModal() {
+            document.getElementById('svt-trait-display-modal').close();
+        }
+
+        function populateModalGrid(filter = '') {
+            const grid = document.getElementById('modal-grid');
+            grid.innerHTML = '';
+            const items = currentModal.type === 'svt' ? ALL_DATA.servants : ALL_DATA.craftEssences;
+            const nameKey = currentModal.type === 'svt' ? 'name' : 'name';
+
+            items
+                .filter(item => item[nameKey]?.toLowerCase().includes(filter.toLowerCase()))
+                .forEach(item => {
+                    const img = currentModal.type === 'svt' ? item.diff.default.img : item.img;
+                    const name = item[nameKey];
+                    const div = createAvatar(item.id, name, img, () => addItem(item.id));
+                    grid.appendChild(div);
+                });
+        }
+
+        function populateTraitModalGrid(filter = '') {
+            const grid = document.getElementById('trait-modal-grid');
+            grid.innerHTML = '';
+            const q = (filter || '').trim().toLowerCase();
+            
+            const candidates = Object.entries(ALL_DATA.traits)
+                .filter(([, name]) => name && name.trim().length > 0) // 过滤空名称
+                .filter(([, name]) => name.toLowerCase().includes(q));
+
+            candidates.sort(([,a],[,b]) => a.localeCompare(b, 'zh-Hans-CN'));
+
+            for (const [id, name] of candidates) {
+                const label = document.createElement('label');
+                const input = document.createElement('input');
+                input.type = 'checkbox';
+                input.dataset.id = id;
+                input.checked = SELECTIONS.allowTraits.has(Number(id));
+                input.onchange = (e) => {
+                    if (e.target.checked) {
+                        SELECTIONS.allowTraits.add(Number(id));
+                    } else {
+                        SELECTIONS.allowTraits.delete(Number(id));
+                    }
+                    renderSelectedTraits();
+                };
+                label.appendChild(input);
+                label.append(` ${name}`);
+                grid.appendChild(label);
+            }
+        }
+
+        document.getElementById('modal-search').addEventListener('input', (e) => {
+            populateModalGrid(e.target.value);
+        });
+
+        // --- 列表管理 ---
+        function addItem(id) {
+            const { type, list } = currentModal;
+            if (type === 'svt' && list === 'include') {
+                const svt = ALL_DATA.servants.find(s => s.id === id);
+                if (svt) {
+                    const diffs = Object.keys(svt.diff);
+                    if (diffs.length > 1) {
+                        openSvtDiffModal(svt);
+                    } else {
+                        addSvtWithDiff(id, diffs[0] || 'default');
+                    }
+                }
+            } else {
+                const key = `${list}${type.charAt(0).toUpperCase() + type.slice(1)}`;
+                SELECTIONS[key].add(id);
+                renderSelectionList(type, list);
+            }
+            closeModal();
+        }
+
+        function addSvtWithDiff(id, diffKey) {
+            SELECTIONS.includeSvt.set(id, diffKey);
+            renderSelectionList('svt', 'include');
+            closeSvtDiffModal();
+        }
+
+        function removeItem(type, list, id) {
+            const key = `${list}${type.charAt(0).toUpperCase() + type.slice(1)}`;
+            if (type === 'svt' && list === 'include') {
+                SELECTIONS.includeSvt.delete(id);
+            } else {
+                SELECTIONS[key].delete(id);
+            }
+            renderSelectionList(type, list);
+        }
+
+        function renderSelectionList(type, list) {
+            const key = `${list}${type.charAt(0).toUpperCase() + type.slice(1)}`;
+            const container = document.getElementById(`${list}-${type}-list`);
+            container.innerHTML = '';
+            const items = type === 'svt' ? ALL_DATA.servants : ALL_DATA.craftEssences;
+            
+            const selection = (type === 'svt' && list === 'include') ? 
+                Array.from(SELECTIONS.includeSvt.keys()) : 
+                SELECTIONS[key];
+
+            selection.forEach(id => {
+                const item = items.find(i => i.id === id);
+                if (item) {
+                    let img, name;
+                    if (type === 'svt' && list === 'include') {
+                        const diffKey = SELECTIONS.includeSvt.get(id);
+                        const detail = item.diff[diffKey];
+                        img = detail.img;
+                        name = detail.name === '默认' ? item.name : `${item.name} (${detail.name})`;
+                    } else {
+                        img = type === 'svt' ? item.diff.default.img : item.img;
+                        name = item.name;
+                    }
+                    const div = createAvatar(id, name, img, null, () => removeItem(type, list, id));
+                    container.appendChild(div);
+                }
+            });
+        }
+
+        // --- 计算逻辑 ---
+        async function calculate() {
+            const btn = document.getElementById('calculate-btn');
+            btn.setAttribute('aria-busy', 'true');
+            btn.textContent = '计算中...';
+
+            const params = new URLSearchParams();
+            params.append('costlimit', document.getElementById('cost-limit').value);
+            params.append('svtlimit', document.getElementById('svt-limit').value);
+            params.append('celimit', document.getElementById('ce-limit').value);
+            params.append('basebond', document.getElementById('base-bond').value);
+
+            SELECTIONS.allowTraits.forEach(id => params.append('allowtraits', id));
+            SELECTIONS.includeSvt.forEach((diff, id) => {
+                params.append('includesvt', id);
+                params.append('includesvtdiff', diff);
+            });
+            SELECTIONS.excludeSvt.forEach(id => params.append('excludesvt', id));
+            SELECTIONS.includeCe.forEach(id => params.append('includece', id));
+            SELECTIONS.excludeCe.forEach(id => params.append('excludece', id));
+
+
+            try {
+                const response = await fetch('/api/calculate', {
+                    method: 'POST',
+                    body: params
+                });
+                if (!response.ok) throw new Error(`Server error: ${response.statusText}`);
+                const results = await response.json();
+                renderResults(results.teams, results.duration);
+            } catch (error) {
+                console.error('Calculation failed:', error);
+                alert(`计算失败: ${error.message}`);
+            } finally {
+                btn.removeAttribute('aria-busy');
+                btn.textContent = '开始计算';
+            }
+        }
+
+        // --- 结果渲染 ---
+        function renderResults(teams, duration) {
+            const container = document.getElementById('results-container');
+            const list = document.getElementById('results-list');
+            list.innerHTML = '';
+
+            if (duration !== undefined) {
+                const p = document.createElement('p');
+                p.textContent = `计算耗时: ${duration} ms`;
+                list.appendChild(p);
+            }
+
+            if (!teams || teams.length === 0) {
+                list.innerHTML += '<p>没有找到符合条件的最优组合。</p>';
+                container.hidden = false;
+                return;
+            }
+
+            teams.forEach((team, index) => {
+                const teamDiv = document.createElement('div');
+                teamDiv.className = 'team-result';
+                
+                const header = document.createElement('hgroup');
+                header.innerHTML = `<h6>方案 ${index + 1}</h6><p>总羁绊: ${team.TotalBond}, 总Cost: ${team.TotalCost}</p>`;
+                teamDiv.appendChild(header);
+
+                const svtGrid = document.createElement('div');
+                svtGrid.className = 'team-grid';
+                teamDiv.appendChild(svtGrid);
+                
+                const svtLimit = parseInt(document.getElementById('svt-limit').value, 10);
+                for (let i = 0; i < svtLimit; i++) {
+                    if (i < team.Servants.length) {
+                        const svt = team.Servants[i];
+                        const diffKey = team.DiffChoice[i];
+                        const detail = svt.diff[diffKey];
+                        var name;
+                        if (detail.name === "默认") {
+                            name = svt.name;
+                        } else {
+                            name = `${svt.name} (形态：${detail.name})`;
+                        }
+                        const div = createAvatar(svt.id, name, detail.img, () => showSvtTraits(svt, diffKey));
+                        
+                        const overlay = document.createElement('div');
+                        overlay.className = 'result-avatar-overlay';
+                        overlay.innerHTML = `
+                            <button title="加入必选" onclick="quickAdd(event, 'svt', 'include', ${svt.id})">➕</button>
+                            <button title="加入排除" onclick="quickAdd(event, 'svt', 'exclude', ${svt.id})">➖</button>
+                        `;
+                        div.appendChild(overlay);
+                        svtGrid.appendChild(div);
+                    } else {
+                        svtGrid.appendChild(createPlaceholder());
+                    }
+                }
+
+                const ceGrid = document.createElement('div');
+                ceGrid.className = 'team-grid';
+                teamDiv.appendChild(ceGrid);
+
+                const ceLimit = parseInt(document.getElementById('ce-limit').value, 10);
+                 for (let i = 0; i < ceLimit; i++) {
+                    if (i < team.CraftEssences.length) {
+                        const ce = team.CraftEssences[i];
+                        const div = createAvatar(ce.id, ce.name, ce.img);
+
+                        const contributionSpan = document.createElement('div');
+                        contributionSpan.className = 'contribution';
+                        contributionSpan.textContent = `+${ce.contribution}`;
+                        div.appendChild(contributionSpan);
+
+                        const overlay = document.createElement('div');
+                        overlay.className = 'result-avatar-overlay';
+                        overlay.innerHTML = `
+                            <button title="加入必选" onclick="quickAdd(event, 'ce', 'include', ${ce.id})">➕</button>
+                            <button title="加入排除" onclick="quickAdd(event, 'ce', 'exclude', ${ce.id})">➖</button>
+                        `;
+                        div.appendChild(overlay);
+                        ceGrid.appendChild(div);
+                    } else {
+                        ceGrid.appendChild(createPlaceholder());
+                    }
+                }
+
+                list.appendChild(teamDiv);
+            });
+            container.hidden = false;
+        }
+
+        function quickAdd(event, type, list, id) {
+            event.stopPropagation();
+            const key = `${list}${type.charAt(0).toUpperCase() + type.slice(1)}`;
+            SELECTIONS[key].add(id);
+            renderSelectionList(type, list);
+        }
+
+        // --- 辅助函数 ---
+        function createAvatar(id, name, imgSrc, clickHandler, removeHandler) {
+            const div = document.createElement('div');
+            div.className = 'avatar-container';
+            div.dataset.id = id;
+            if (clickHandler) div.onclick = clickHandler;
+
+            const img = document.createElement('img');
+            img.src = imgSrc;
+            img.alt = name;
+            img.title = name;
+            div.appendChild(img);
+
+            const nameSpan = document.createElement('span');
+            nameSpan.className = 'name';
+            nameSpan.textContent = name;
+            div.appendChild(nameSpan);
+
+            if (removeHandler) {
+                const removeBtn = document.createElement('button');
+                removeBtn.className = 'remove-btn';
+                removeBtn.textContent = '×';
+                removeBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    removeHandler();
+                };
+                div.appendChild(removeBtn);
+            }
+            return div;
+        }
+
+        function createPlaceholder() {
+            const div = document.createElement('div');
+            div.className = 'placeholder';
+            return div;
+        }
+    </script>
+</body>
+</html>

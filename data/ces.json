@@ -1,0 +1,271 @@
+[
+    {
+        "id": 9408800,
+        "name": "异星之神",
+        "img": "https://static.atlasacademy.io/JP/EquipFaces/f_94088000.png",
+        "cost": 12,
+        "filters": [
+            [
+                [
+                    304
+                ],
+                20
+            ],
+            [
+                [
+                    203
+                ],
+                20
+            ]
+        ]
+    },
+    {
+        "id": 9408590,
+        "name": "献给幸福的新娘",
+        "img": "https://static.atlasacademy.io/JP/EquipFaces/f_94085900.png",
+        "cost": 12,
+        "filters": [
+            [
+                [
+                    300,
+                    2
+                ],
+                20
+            ]
+        ]
+    },
+    {
+        "id": 9408390,
+        "name": "至诚的一针",
+        "img": "https://static.atlasacademy.io/JP/EquipFaces/f_94083900.png",
+        "cost": 12,
+        "filters": [
+            [
+                [
+                    2780
+                ],
+                20
+            ]
+        ]
+    },
+    {
+        "id": 9408220,
+        "name": "秘密任务",
+        "img": "https://static.atlasacademy.io/JP/EquipFaces/f_94082200.png",
+        "cost": 12,
+        "filters": [
+            [
+                [
+                    103
+                ],
+                20
+            ]
+        ]
+    },
+    {
+        "id": 9408060,
+        "name": "手稿之翼",
+        "img": "https://static.atlasacademy.io/JP/EquipFaces/f_94080600.png",
+        "cost": 12,
+        "filters": [
+            [
+                [
+                    104
+                ],
+                20
+            ]
+        ]
+    },
+    {
+        "id": 9407850,
+        "name": "检查报告",
+        "img": "https://static.atlasacademy.io/JP/EquipFaces/f_94078500.png",
+        "cost": 12,
+        "filters": [
+            [
+                [
+                    300,
+                    303
+                ],
+                20
+            ]
+        ]
+    },
+    {
+        "id": 9407740,
+        "name": "迦勒底之晨",
+        "img": "https://static.atlasacademy.io/JP/EquipFaces/f_94077400.png",
+        "cost": 12,
+        "filters": [
+            [
+                [
+                    2654
+                ],
+                20
+            ]
+        ]
+    },
+    {
+        "id": 9308100,
+        "name": "英灵逢魔：剑之骑士",
+        "img": "https://static.atlasacademy.io/JP/EquipFaces/f_93081000.png",
+        "cost": 9,
+        "filters": [
+            [
+                [
+                    2883
+                ],
+                10
+            ]
+        ]
+    },
+    {
+        "id": 9407480,
+        "name": "来自ＮＦＦ的爱",
+        "img": "https://static.atlasacademy.io/JP/EquipFaces/f_94074800.png",
+        "cost": 12,
+        "filters": [
+            [
+                [
+                    2821
+                ],
+                20
+            ]
+        ]
+    },
+    {
+        "id": 9406740,
+        "name": "梦想衣橱",
+        "img": "https://static.atlasacademy.io/JP/EquipFaces/f_94067400.png",
+        "cost": 12,
+        "filters": [
+            [
+                [],
+                2.5
+            ]
+        ]
+    },
+    {
+        "id": 9406200,
+        "name": "迎向碧空",
+        "img": "https://static.atlasacademy.io/JP/EquipFaces/f_94062000.png",
+        "cost": 12,
+        "filters": [
+            [
+                [],
+                2.5
+            ]
+        ]
+    },
+    {
+        "id": 9406010,
+        "name": "狼的故事",
+        "img": "https://static.atlasacademy.io/JP/EquipFaces/f_94060100.png",
+        "cost": 12,
+        "filters": [
+            [
+                [],
+                2.5
+            ]
+        ]
+    },
+    {
+        "id": 9405170,
+        "name": "无雪之夜过后",
+        "img": "https://static.atlasacademy.io/JP/EquipFaces/f_94051700.png",
+        "cost": 12,
+        "filters": [
+            [
+                [],
+                5
+            ]
+        ]
+    },
+    {
+        "id": 9404360,
+        "name": "格兰·卡瓦洛",
+        "img": "https://static.atlasacademy.io/JP/EquipFaces/f_94043600.png",
+        "cost": 12,
+        "filters": [
+            [
+                [],
+                5
+            ]
+        ]
+    },
+    {
+        "id": 9404180,
+        "name": "迦勒底晚餐时光",
+        "img": "https://static.atlasacademy.io/JP/EquipFaces/f_94041800.png",
+        "cost": 12,
+        "filters": [
+            [
+                [],
+                5
+            ]
+        ]
+    },
+    {
+        "id": 9403990,
+        "name": "名侦探芙尔摩斯",
+        "img": "https://static.atlasacademy.io/JP/EquipFaces/f_94039900.png",
+        "cost": 12,
+        "filters": [
+            [
+                [],
+                5
+            ]
+        ]
+    },
+    {
+        "id": 9403520,
+        "name": "迦勒底午茶时光",
+        "img": "https://static.atlasacademy.io/JP/EquipFaces/f_94035200.png",
+        "cost": 12,
+        "filters": [
+            [
+                [],
+                5
+            ]
+        ]
+    },
+    {
+        "id": 9401970,
+        "name": "迦勒底午餐时光",
+        "img": "https://static.atlasacademy.io/JP/EquipFaces/f_94019700.png",
+        "cost": 12,
+        "filters": [
+            [
+                [],
+                10
+            ]
+        ]
+    },
+    {
+        "id": 9400980,
+        "name": "英灵肖像：阿尔托莉雅·潘德拉贡",
+        "img": "https://static.atlasacademy.io/JP/EquipFaces/f_94009800.png",
+        "cost": 5,
+        "filters": [
+            [
+                [],
+                -50
+            ]
+        ]
+    },
+    {
+        "id": 9408990,
+        "name": null,
+        "img": "https://static.atlasacademy.io/JP/EquipFaces/f_94089900.png",
+        "cost": 12,
+        "filters": [
+            [
+                [
+                    301,
+                    2858
+                ],
+                20
+            ]
+        ]
+    }
+]
