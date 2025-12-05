@@ -433,26 +433,6 @@
                     104,
                     202,
                     301,
-                    405,
-                    1000,
-                    2001,
-                    2008,
-                    2631,
-                    2654,
-                    2858,
-                    5000,
-                    505500
-                ],
-                "img": "https://static.atlasacademy.io/JP/Faces/f_5055000.png",
-                "cost": 16
-            },
-            "asc1": {
-                "name": "灵基再临1",
-                "traits": [
-                    2,
-                    104,
-                    202,
-                    301,
                     303,
                     405,
                     1000,
@@ -464,7 +444,7 @@
                     5000,
                     505500
                 ],
-                "img": "https://static.atlasacademy.io/JP/Faces/f_5055001.png",
+                "img": "https://static.atlasacademy.io/JP/Faces/f_5055000.png",
                 "cost": 16
             },
             "asc3": {
@@ -500,15 +480,21 @@
             "default": {
                 "name": "默认",
                 "traits": [
+                    2,
                     109,
                     202,
+                    300,
+                    303,
                     405,
                     1000,
                     2000,
                     2001,
+                    2008,
+                    2654,
                     2797,
                     2835,
                     2848,
+                    2881,
                     5000,
                     1001700
                 ],
@@ -584,7 +570,9 @@
                     2001,
                     2040,
                     2113,
+                    2631,
                     2835,
+                    2838,
                     2924,
                     5000,
                     3300200
@@ -957,6 +945,7 @@
                     2037,
                     2667,
                     2780,
+                    2781,
                     2925,
                     5000,
                     1001800
@@ -990,8 +979,8 @@
                 "img": "https://static.atlasacademy.io/JP/Faces/f_10018001.png",
                 "cost": 16
             },
-            "asc3": {
-                "name": "灵基再临3",
+            "1001830": {
+                "name": "简易灵衣：缪瑞恩",
                 "traits": [
                     2,
                     109,
@@ -1007,12 +996,11 @@
                     2037,
                     2667,
                     2780,
-                    2781,
                     2925,
                     5000,
                     1001800
                 ],
-                "img": "https://static.atlasacademy.io/JP/Faces/f_10018003.png",
+                "img": "https://static.atlasacademy.io/JP/Faces/f_10018300.png",
                 "cost": 16
             }
         }
@@ -1037,8 +1025,11 @@
                     2040,
                     2113,
                     2631,
+                    2667,
+                    2847,
                     2849,
                     2858,
+                    2973,
                     5000,
                     205300
                 ],
@@ -1142,26 +1133,6 @@
                     304,
                     405,
                     1000,
-                    2008,
-                    2011,
-                    2037,
-                    2858,
-                    5000,
-                    705000
-                ],
-                "img": "https://static.atlasacademy.io/JP/Faces/f_7050000.png",
-                "cost": 16
-            },
-            "asc1": {
-                "name": "灵基再临1",
-                "traits": [
-                    2,
-                    106,
-                    201,
-                    302,
-                    304,
-                    405,
-                    1000,
                     2001,
                     2008,
                     2011,
@@ -1171,7 +1142,7 @@
                     5000,
                     705000
                 ],
-                "img": "https://static.atlasacademy.io/JP/Faces/f_7050001.png",
+                "img": "https://static.atlasacademy.io/JP/Faces/f_7050000.png",
                 "cost": 16
             },
             "asc3": {
@@ -1382,10 +1353,12 @@
                     405,
                     1000,
                     2000,
+                    2001,
                     2008,
                     2011,
                     2037,
                     2040,
+                    2631,
                     2851,
                     2858,
                     2881,
@@ -1608,6 +1581,7 @@
                     2781,
                     2821,
                     2835,
+                    2847,
                     2851,
                     2924,
                     5000,
@@ -1616,8 +1590,8 @@
                 "img": "https://static.atlasacademy.io/JP/Faces/f_28011000.png",
                 "cost": 16
             },
-            "asc3": {
-                "name": "灵基再临3",
+            "asc1": {
+                "name": "灵基再临1",
                 "traits": [
                     2,
                     120,
@@ -1640,13 +1614,12 @@
                     2781,
                     2821,
                     2835,
-                    2847,
                     2851,
                     2924,
                     5000,
                     2801100
                 ],
-                "img": "https://static.atlasacademy.io/JP/Faces/f_28011003.png",
+                "img": "https://static.atlasacademy.io/JP/Faces/f_28011001.png",
                 "cost": 16
             }
         }
@@ -1675,6 +1648,7 @@
                     2113,
                     2797,
                     2835,
+                    2847,
                     2851,
                     2858,
                     2881,
@@ -1682,6 +1656,35 @@
                     305900
                 ],
                 "img": "https://static.atlasacademy.io/JP/Faces/f_3059000.png",
+                "cost": 16
+            },
+            "asc1": {
+                "name": "灵基再临1",
+                "traits": [
+                    3,
+                    101,
+                    200,
+                    302,
+                    305,
+                    405,
+                    1000,
+                    2000,
+                    2001,
+                    2008,
+                    2009,
+                    2011,
+                    2012,
+                    2040,
+                    2113,
+                    2797,
+                    2835,
+                    2851,
+                    2858,
+                    2881,
+                    5000,
+                    305900
+                ],
+                "img": "https://static.atlasacademy.io/JP/Faces/f_3059001.png",
                 "cost": 16
             }
         }
@@ -1692,23 +1695,6 @@
         "diff": {
             "default": {
                 "name": "默认",
-                "traits": [
-                    2,
-                    132,
-                    203,
-                    300,
-                    405,
-                    1000,
-                    2000,
-                    2001,
-                    5000,
-                    4000100
-                ],
-                "img": "https://static.atlasacademy.io/JP/Faces/f_40001000.png",
-                "cost": 16
-            },
-            "asc1": {
-                "name": "灵基再临1",
                 "traits": [
                     2,
                     132,
@@ -1725,7 +1711,7 @@
                     5000,
                     4000100
                 ],
-                "img": "https://static.atlasacademy.io/JP/Faces/f_40001001.png",
+                "img": "https://static.atlasacademy.io/JP/Faces/f_40001000.png",
                 "cost": 16
             },
             "asc3": {
@@ -1858,14 +1844,19 @@
                     2,
                     115,
                     202,
+                    301,
+                    303,
                     405,
                     1000,
                     2001,
                     2631,
+                    2654,
                     2731,
                     2780,
                     2810,
+                    2821,
                     2838,
+                    2919,
                     5000,
                     2301100
                 ],
@@ -1919,31 +1910,6 @@
                 ],
                 "img": "https://static.atlasacademy.io/JP/Faces/f_23011003.png",
                 "cost": 16
-            },
-            "2301130": {
-                "name": "简易灵衣：隐身的太阳眼镜",
-                "traits": [
-                    2,
-                    115,
-                    202,
-                    301,
-                    303,
-                    405,
-                    1000,
-                    2001,
-                    2631,
-                    2654,
-                    2731,
-                    2780,
-                    2810,
-                    2821,
-                    2838,
-                    2919,
-                    5000,
-                    2301100
-                ],
-                "img": "https://static.atlasacademy.io/JP/Faces/f_23011300.png",
-                "cost": 16
             }
         }
     },
@@ -1958,28 +1924,6 @@
                     101,
                     202,
                     300,
-                    404,
-                    1000,
-                    2001,
-                    2008,
-                    2631,
-                    2654,
-                    2667,
-                    2838,
-                    2858,
-                    5000,
-                    306000
-                ],
-                "img": "https://static.atlasacademy.io/JP/Faces/f_3060000.png",
-                "cost": 12
-            },
-            "asc1": {
-                "name": "灵基再临1",
-                "traits": [
-                    2,
-                    101,
-                    202,
-                    300,
                     303,
                     404,
                     1000,
@@ -1993,7 +1937,7 @@
                     5000,
                     306000
                 ],
-                "img": "https://static.atlasacademy.io/JP/Faces/f_3060001.png",
+                "img": "https://static.atlasacademy.io/JP/Faces/f_3060000.png",
                 "cost": 12
             },
             "asc3": {
@@ -2132,31 +2076,6 @@
                     2009,
                     2012,
                     2040,
-                    2631,
-                    2858,
-                    2973,
-                    5000,
-                    405700
-                ],
-                "img": "https://static.atlasacademy.io/JP/Faces/f_4057000.png",
-                "cost": 16
-            },
-            "asc1": {
-                "name": "灵基再临1",
-                "traits": [
-                    1,
-                    103,
-                    203,
-                    300,
-                    303,
-                    405,
-                    1000,
-                    2000,
-                    2001,
-                    2008,
-                    2009,
-                    2012,
-                    2040,
                     2114,
                     2466,
                     2631,
@@ -2166,7 +2085,7 @@
                     5000,
                     405700
                 ],
-                "img": "https://static.atlasacademy.io/JP/Faces/f_4057001.png",
+                "img": "https://static.atlasacademy.io/JP/Faces/f_4057000.png",
                 "cost": 16
             },
             "asc3": {
@@ -2389,6 +2308,34 @@
                 ],
                 "img": "https://static.atlasacademy.io/JP/Faces/f_11022000.png",
                 "cost": 12
+            }
+        }
+    },
+    {
+        "id": 2801200,
+        "name": "所罗门",
+        "diff": {
+            "default": {
+                "name": "默认",
+                "traits": [
+                    1,
+                    120,
+                    201,
+                    301,
+                    304,
+                    405,
+                    1000,
+                    2008,
+                    2011,
+                    2037,
+                    2113,
+                    2835,
+                    2849,
+                    5000,
+                    2801200
+                ],
+                "img": "https://static.atlasacademy.io/JP/Faces/f_28012000.png",
+                "cost": 16
             }
         }
     },
@@ -5923,29 +5870,6 @@
             "default": {
                 "name": "默认",
                 "traits": [
-                    109,
-                    202,
-                    302,
-                    305,
-                    405,
-                    1000,
-                    2001,
-                    2007,
-                    2008,
-                    2012,
-                    2631,
-                    2780,
-                    2839,
-                    5000,
-                    10009,
-                    1000700
-                ],
-                "img": "https://static.atlasacademy.io/JP/Faces/f_10007000.png",
-                "cost": 16
-            },
-            "asc1": {
-                "name": "灵基再临1",
-                "traits": [
                     2,
                     109,
                     202,
@@ -5964,7 +5888,7 @@
                     10009,
                     1000700
                 ],
-                "img": "https://static.atlasacademy.io/JP/Faces/f_10007001.png",
+                "img": "https://static.atlasacademy.io/JP/Faces/f_10007000.png",
                 "cost": 16
             },
             "1000730": {
@@ -7013,6 +6937,7 @@
                     2011,
                     2040,
                     2631,
+                    2667,
                     2835,
                     2851,
                     2858,
@@ -7020,6 +6945,32 @@
                     603700
                 ],
                 "img": "https://static.atlasacademy.io/JP/Faces/f_6037000.png",
+                "cost": 16
+            },
+            "asc1": {
+                "name": "灵基再临1",
+                "traits": [
+                    2,
+                    105,
+                    200,
+                    301,
+                    304,
+                    405,
+                    1000,
+                    2000,
+                    2001,
+                    2008,
+                    2009,
+                    2011,
+                    2040,
+                    2631,
+                    2835,
+                    2851,
+                    2858,
+                    5000,
+                    603700
+                ],
+                "img": "https://static.atlasacademy.io/JP/Faces/f_6037001.png",
                 "cost": 16
             },
             "asc3": {
@@ -7860,14 +7811,15 @@
                     2795,
                     2838,
                     2851,
+                    2919,
                     5000,
                     900900
                 ],
                 "img": "https://static.atlasacademy.io/JP/Faces/f_9009000.png",
                 "cost": 16
             },
-            "asc3": {
-                "name": "灵基再临3",
+            "asc1": {
+                "name": "灵基再临1",
                 "traits": [
                     2,
                     108,
@@ -7888,11 +7840,10 @@
                     2795,
                     2838,
                     2851,
-                    2919,
                     5000,
                     900900
                 ],
-                "img": "https://static.atlasacademy.io/JP/Faces/f_9009003.png",
+                "img": "https://static.atlasacademy.io/JP/Faces/f_9009001.png",
                 "cost": 16
             }
         }
@@ -7957,6 +7908,7 @@
                     2731,
                     2838,
                     2839,
+                    2847,
                     2858,
                     2924,
                     5000,
@@ -7966,8 +7918,8 @@
                 "img": "https://static.atlasacademy.io/JP/Faces/f_6040000.png",
                 "cost": 12
             },
-            "asc1": {
-                "name": "灵基再临1",
+            "asc3": {
+                "name": "灵基再临3",
                 "traits": [
                     2,
                     105,
@@ -7983,14 +7935,13 @@
                     2731,
                     2838,
                     2839,
-                    2847,
                     2858,
                     2924,
                     5000,
                     10009,
                     604000
                 ],
-                "img": "https://static.atlasacademy.io/JP/Faces/f_6040001.png",
+                "img": "https://static.atlasacademy.io/JP/Faces/f_6040003.png",
                 "cost": 12
             }
         }
@@ -8552,11 +8503,37 @@
                     2011,
                     2019,
                     2037,
+                    2632,
+                    2821,
                     2858,
                     5000,
                     703700
                 ],
                 "img": "https://static.atlasacademy.io/JP/Faces/f_7037000.png",
+                "cost": 12
+            },
+            "asc1": {
+                "name": "灵基再临1",
+                "traits": [
+                    2,
+                    106,
+                    201,
+                    302,
+                    304,
+                    404,
+                    1000,
+                    1132,
+                    2001,
+                    2002,
+                    2008,
+                    2011,
+                    2019,
+                    2037,
+                    2858,
+                    5000,
+                    703700
+                ],
+                "img": "https://static.atlasacademy.io/JP/Faces/f_7037001.png",
                 "cost": 12
             }
         }
@@ -8637,35 +8614,13 @@
                     2008,
                     2011,
                     2037,
-                    2838,
-                    2850,
-                    5000,
-                    2300400
-                ],
-                "img": "https://static.atlasacademy.io/JP/Faces/f_23004000.png",
-                "cost": 16
-            },
-            "asc1": {
-                "name": "灵基再临1",
-                "traits": [
-                    2,
-                    115,
-                    201,
-                    300,
-                    304,
-                    405,
-                    1000,
-                    2001,
-                    2008,
-                    2011,
-                    2037,
                     2631,
                     2838,
                     2850,
                     5000,
                     2300400
                 ],
-                "img": "https://static.atlasacademy.io/JP/Faces/f_23004001.png",
+                "img": "https://static.atlasacademy.io/JP/Faces/f_23004000.png",
                 "cost": 16
             },
             "asc3": {
@@ -8814,10 +8769,37 @@
                     2667,
                     2731,
                     2838,
+                    2924,
                     5000,
                     2500700
                 ],
                 "img": "https://static.atlasacademy.io/JP/Faces/f_25007000.png",
+                "cost": 16
+            },
+            "asc1": {
+                "name": "灵基再临1",
+                "traits": [
+                    2,
+                    117,
+                    201,
+                    300,
+                    304,
+                    405,
+                    1000,
+                    1172,
+                    2000,
+                    2001,
+                    2011,
+                    2037,
+                    2040,
+                    2631,
+                    2667,
+                    2731,
+                    2838,
+                    5000,
+                    2500700
+                ],
+                "img": "https://static.atlasacademy.io/JP/Faces/f_25007001.png",
                 "cost": 16
             }
         }
@@ -9553,11 +9535,37 @@
                     2037,
                     2075,
                     2632,
+                    2795,
                     2858,
                     5000,
                     105000
                 ],
                 "img": "https://static.atlasacademy.io/JP/Faces/f_1050000.png",
+                "cost": 12
+            },
+            "asc1": {
+                "name": "灵基再临1",
+                "traits": [
+                    2,
+                    100,
+                    201,
+                    301,
+                    303,
+                    404,
+                    1000,
+                    1177,
+                    2001,
+                    2008,
+                    2011,
+                    2012,
+                    2037,
+                    2075,
+                    2632,
+                    2858,
+                    5000,
+                    105000
+                ],
+                "img": "https://static.atlasacademy.io/JP/Faces/f_1050001.png",
                 "cost": 12
             }
         }
@@ -9583,11 +9591,36 @@
                     2011,
                     2019,
                     2037,
+                    2795,
                     2858,
                     5000,
                     204300
                 ],
                 "img": "https://static.atlasacademy.io/JP/Faces/f_2043000.png",
+                "cost": 12
+            },
+            "asc1": {
+                "name": "灵基再临1",
+                "traits": [
+                    2,
+                    102,
+                    201,
+                    301,
+                    304,
+                    404,
+                    1000,
+                    1177,
+                    2001,
+                    2008,
+                    2009,
+                    2011,
+                    2019,
+                    2037,
+                    2858,
+                    5000,
+                    204300
+                ],
+                "img": "https://static.atlasacademy.io/JP/Faces/f_2043001.png",
                 "cost": 12
             }
         }
@@ -9614,6 +9647,7 @@
                     2037,
                     2632,
                     2780,
+                    2795,
                     2810,
                     2835,
                     2858,
@@ -9621,6 +9655,33 @@
                     304800
                 ],
                 "img": "https://static.atlasacademy.io/JP/Faces/f_3048000.png",
+                "cost": 16
+            },
+            "asc1": {
+                "name": "灵基再临1",
+                "traits": [
+                    2,
+                    101,
+                    201,
+                    302,
+                    304,
+                    405,
+                    1000,
+                    1177,
+                    2001,
+                    2002,
+                    2011,
+                    2012,
+                    2037,
+                    2632,
+                    2780,
+                    2810,
+                    2835,
+                    2858,
+                    5000,
+                    304800
+                ],
+                "img": "https://static.atlasacademy.io/JP/Faces/f_3048001.png",
                 "cost": 16
             },
             "asc3": {
@@ -9649,34 +9710,6 @@
                     304800
                 ],
                 "img": "https://static.atlasacademy.io/JP/Faces/f_3048003.png",
-                "cost": 16
-            },
-            "304830": {
-                "name": "简易灵衣：妖精骑士兰斯洛特（第一再临）",
-                "traits": [
-                    2,
-                    101,
-                    201,
-                    302,
-                    304,
-                    405,
-                    1000,
-                    1177,
-                    2001,
-                    2002,
-                    2011,
-                    2012,
-                    2037,
-                    2632,
-                    2780,
-                    2795,
-                    2810,
-                    2835,
-                    2858,
-                    5000,
-                    304800
-                ],
-                "img": "https://static.atlasacademy.io/JP/Faces/f_3048300.png",
                 "cost": 16
             }
         }
@@ -9884,6 +9917,7 @@
                     2838,
                     2839,
                     2858,
+                    2881,
                     5000,
                     10009,
                     105100
@@ -9891,8 +9925,8 @@
                 "img": "https://static.atlasacademy.io/JP/Faces/f_1051000.png",
                 "cost": 16
             },
-            "asc1": {
-                "name": "灵基再临1",
+            "asc3": {
+                "name": "灵基再临3",
                 "traits": [
                     3,
                     100,
@@ -9910,12 +9944,11 @@
                     2838,
                     2839,
                     2858,
-                    2881,
                     5000,
                     10009,
                     105100
                 ],
-                "img": "https://static.atlasacademy.io/JP/Faces/f_1051001.png",
+                "img": "https://static.atlasacademy.io/JP/Faces/f_1051003.png",
                 "cost": 16
             }
         }
@@ -10023,6 +10056,7 @@
                     2019,
                     2040,
                     2631,
+                    2667,
                     2835,
                     2838,
                     2851,
@@ -10030,6 +10064,33 @@
                     1101100
                 ],
                 "img": "https://static.atlasacademy.io/JP/Faces/f_11011000.png",
+                "cost": 16
+            },
+            "asc1": {
+                "name": "灵基再临1",
+                "traits": [
+                    2,
+                    110,
+                    200,
+                    302,
+                    304,
+                    405,
+                    1000,
+                    2000,
+                    2001,
+                    2008,
+                    2009,
+                    2011,
+                    2019,
+                    2040,
+                    2631,
+                    2835,
+                    2838,
+                    2851,
+                    5000,
+                    1101100
+                ],
+                "img": "https://static.atlasacademy.io/JP/Faces/f_11011001.png",
                 "cost": 16
             },
             "asc3": {
@@ -10964,6 +11025,7 @@
                     2,
                     115,
                     203,
+                    301,
                     303,
                     405,
                     1000,
@@ -10991,24 +11053,6 @@
                     2300500
                 ],
                 "img": "https://static.atlasacademy.io/JP/Faces/f_23005001.png",
-                "cost": 16
-            },
-            "asc3": {
-                "name": "灵基再临3",
-                "traits": [
-                    2,
-                    115,
-                    203,
-                    301,
-                    303,
-                    405,
-                    1000,
-                    2001,
-                    2835,
-                    5000,
-                    2300500
-                ],
-                "img": "https://static.atlasacademy.io/JP/Faces/f_23005003.png",
                 "cost": 16
             }
         }
@@ -11803,6 +11847,7 @@
                     2797,
                     2821,
                     2835,
+                    2847,
                     2848,
                     2850,
                     5000,
@@ -11811,8 +11856,8 @@
                 "img": "https://static.atlasacademy.io/JP/Faces/f_10016000.png",
                 "cost": 16
             },
-            "asc1": {
-                "name": "灵基再临1",
+            "asc3": {
+                "name": "灵基再临3",
                 "traits": [
                     2,
                     109,
@@ -11829,13 +11874,12 @@
                     2797,
                     2821,
                     2835,
-                    2847,
                     2848,
                     2850,
                     5000,
                     1001600
                 ],
-                "img": "https://static.atlasacademy.io/JP/Faces/f_10016001.png",
+                "img": "https://static.atlasacademy.io/JP/Faces/f_10016003.png",
                 "cost": 16
             }
         }
@@ -11859,6 +11903,7 @@
                     2004,
                     2007,
                     2113,
+                    2667,
                     2821,
                     2835,
                     5000,
@@ -11867,8 +11912,8 @@
                 "img": "https://static.atlasacademy.io/JP/Faces/f_33001000.png",
                 "cost": 16
             },
-            "asc1": {
-                "name": "灵基再临1",
+            "asc3": {
+                "name": "灵基再临3",
                 "traits": [
                     2,
                     124,
@@ -11882,13 +11927,12 @@
                     2004,
                     2007,
                     2113,
-                    2667,
                     2821,
                     2835,
                     5000,
                     3300100
                 ],
-                "img": "https://static.atlasacademy.io/JP/Faces/f_33001001.png",
+                "img": "https://static.atlasacademy.io/JP/Faces/f_33001003.png",
                 "cost": 16
             }
         }
@@ -12155,6 +12199,7 @@
                     104,
                     201,
                     300,
+                    303,
                     405,
                     1000,
                     1177,
@@ -12535,35 +12580,11 @@
                     2019,
                     2037,
                     2838,
-                    5000,
-                    2800600
-                ],
-                "img": "https://static.atlasacademy.io/JP/Faces/f_28006000.png",
-                "cost": 12
-            },
-            "asc1": {
-                "name": "灵基再临1",
-                "traits": [
-                    2,
-                    120,
-                    201,
-                    301,
-                    304,
-                    404,
-                    1000,
-                    1177,
-                    2001,
-                    2008,
-                    2009,
-                    2011,
-                    2019,
-                    2037,
-                    2838,
                     2875,
                     5000,
                     2800600
                 ],
-                "img": "https://static.atlasacademy.io/JP/Faces/f_28006001.png",
+                "img": "https://static.atlasacademy.io/JP/Faces/f_28006000.png",
                 "cost": 12
             },
             "asc3": {
@@ -15275,6 +15296,7 @@
                     2001,
                     2008,
                     2810,
+                    2847,
                     2858,
                     5000,
                     500400

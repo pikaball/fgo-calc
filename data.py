@@ -73,7 +73,7 @@ def translate(text, type):
     mapping = json.loads(open(f"names/{type}.json", "r").read())
     if str(text) in mapping:
         return mapping[str(text)]
-    return None
+    return text
 
 def get_traits(trait_list):
     traits = []
@@ -152,6 +152,8 @@ def process_servant(test):
         if 'ascension' in indiv:
             for key, value in indiv['ascension'].items():
                 asc_key = f"asc{key}"
+                if key == '0':
+                    asc_key = 'default'
                 if asc_key in data['diff']:
                     data['diff'][asc_key]['traits'] = get_traits(value)
         if 'costume' in indiv:
