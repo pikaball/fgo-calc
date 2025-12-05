@@ -102,8 +102,8 @@
             }
             .result-avatar-overlay {
                 flex-direction: row;
-                top: auto;
-                bottom: 2px;
+                top: 52px;
+                bottom: auto;
                 left: 50%;
                 transform: translateX(-50%);
                 background: rgba(0,0,0,0.5);
@@ -631,7 +631,7 @@
                         const overlay = document.createElement('div');
                         overlay.className = 'result-avatar-overlay';
                         overlay.innerHTML = `
-                            <button title="加入必选" onclick="quickAdd(event, 'svt', 'include', ${svt.id})">➕</button>
+                            <button title="加入必选" onclick="quickAdd(event, 'svt', 'include', ${svt.id}, '${diffKey}')">➕</button>
                             <button title="加入排除" onclick="quickAdd(event, 'svt', 'exclude', ${svt.id})">➖</button>
                         `;
                         div.appendChild(overlay);
@@ -674,10 +674,14 @@
             container.hidden = false;
         }
 
-        function quickAdd(event, type, list, id) {
+        function quickAdd(event, type, list, id, extra) {
             event.stopPropagation();
             const key = `${list}${type.charAt(0).toUpperCase() + type.slice(1)}`;
-            SELECTIONS[key].add(id);
+            if (key === 'includeSvt') {
+                SELECTIONS[key].set(id, extra || 'default');
+            } else {
+                SELECTIONS[key].add(id);
+            }
             renderSelectionList(type, list);
         }
 
