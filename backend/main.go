@@ -97,6 +97,11 @@ type TeamResponse struct {
     TotalBond     int            `json:"TotalBond"`
 }
 
+type PathNode struct {
+    ItemIdx int
+    Prev    *PathNode
+}
+
 type CeEffect struct {
 	Percent float64
 	Direct  int
@@ -450,7 +455,6 @@ func Optimize(costLimit int, svtLimit int, ceLimit int, allowTraits []int, inclu
 		return []TeamResponse{}, 0
 	}
 
-	// 构造 CE 组合池（按数量） —— 保持原逻辑，不做剪枝（按你的要求）
 	mince := len(includeCe)
 	if mince < 0 {
 		mince = 0
@@ -645,16 +649,21 @@ func Optimize(costLimit int, svtLimit int, ceLimit int, allowTraits []int, inclu
 			// 为回溯保存信息
 			// prevChoice[k][c] = index of item used to reach dp[k][c], -1 if none
 			// prevCost[k][c] = previous cost before using that item
-			prevChoice := make([][]int, currentSvtLimit+1)
-			prevCost := make([][]int, currentSvtLimit+1)
-			for i := range prevChoice {
-				prevChoice[i] = make([]int, currentCostLimit+1)
-				prevCost[i] = make([]int, currentCostLimit+1)
-				for j := range prevChoice[i] {
-					prevChoice[i][j] = -1
-					prevCost[i][j] = -1
-				}
-			}
+			// prevChoice := make([][]int, currentSvtLimit+1)
+			// prevCost := make([][]int, currentSvtLimit+1)
+			// for i := range prevChoice {
+			// 	prevChoice[i] = make([]int, currentCostLimit+1)
+			// 	prevCost[i] = make([]int, currentCostLimit+1)
+			// 	for j := range prevChoice[i] {
+			// 		prevChoice[i][j] = -1
+			// 		prevCost[i][j] = -1
+			// 	}
+			// }
+
+			paths := make([][]*PathNode, currentSvtLimit+1)
+            for i := range paths {
+                paths[i] = make([]*PathNode, currentCostLimit+1)
+            }
 
 			// 遍历每个 item（每个可选从者），做 0/1 背包（并且项数受限）
 			for itemIdx, item := range optionalBonuses {
@@ -674,10 +683,12 @@ func Optimize(costLimit int, svtLimit int, ceLimit int, allowTraits []int, inclu
 						}
 						newBond := dp[k-1][j-cost] + bonus
 						if newBond > dp[k][j] {
-							dp[k][j] = newBond
-							prevChoice[k][j] = itemIdx
-							prevCost[k][j] = j - cost
-						}
+                            dp[k][j] = newBond
+                            paths[k][j] = &PathNode{
+                                ItemIdx: itemIdx,
+                                Prev:    paths[k-1][j-cost],
+                            }
+                        }
 					}
 				}
 			}
@@ -690,19 +701,11 @@ func Optimize(costLimit int, svtLimit int, ceLimit int, allowTraits []int, inclu
 					}
 					// 回溯出选中的 items
 					used := make([]bool, len(optionalBonuses))
-					curK := k
-					curCost := j
-					for curK > 0 {
-						idx := prevChoice[curK][curCost]
-						if idx < 0 {
-							// 说明存在某条路径使用了 fewer items than curK but dp value set? 理论上不会，但防护
-							break
-						}
-						used[idx] = true
-						pc := prevCost[curK][curCost]
-						curCost = pc
-						curK--
-					}
+					node := paths[k][j]
+                    for node != nil {
+                        used[node.ItemIdx] = true
+                        node = node.Prev
+                    }
 					// 根据 used 标记构造 chosen 列表和计算总成本
 					chosen := []SvtBonus{}
 					totalCost := ceCost + mandatoryCost
