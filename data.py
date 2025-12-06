@@ -92,6 +92,21 @@ def process_servant(test):
     cost = test['cost']
     img = test['extraAssets']['faces']['ascension']['1']
 
+    # process traitAdd
+    if 'traitAdd' in test:
+        trait_adds = test['traitAdd']
+        for trait_add in trait_adds:
+            if not "eventId" in trait_add and "endedAt" in trait_add:
+                # if test['id'] == 604200: print(trait_add)
+                ended_at = datetime.fromtimestamp(trait_add["endedAt"])
+                if ended_at < datetime.now():
+                    continue
+                # traits = traits + get_traits(trait_add['trait'])
+                traits = list(set(traits + get_traits(trait_add['trait'])))
+                # sort traits
+                traits.sort()
+
+
     data['diff'] = {}
 
     data['diff']['default'] = {
@@ -161,7 +176,6 @@ def process_servant(test):
                 if str(key) in data['diff']:
                     data['diff'][str(key)]['traits'] = get_traits(value)
 
-    # 去重
     diffs = []
 
     for k in list(data['diff'].keys()):
