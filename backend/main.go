@@ -296,6 +296,12 @@ func GetCombination(num int, includeCe []int, excludeCe []int) [][]CraftEssence 
 		}
 	}
 
+	if len(pool) < num {
+		comb := make([]CraftEssence, len(pool))
+		copy(comb, pool)
+		return [][]CraftEssence{comb}
+	}
+
 	if len(included) > num {
 		return [][]CraftEssence{}
 	}
@@ -461,9 +467,21 @@ func Optimize(costLimit int, svtLimit int, ceLimit int, allowTraits []int, inclu
 	}
 	mince += (costLimit - svtLimit*16) / 12
 
+	if mince > ceLimit {
+		mince = ceLimit
+	}
+
 	cePool := [][]CraftEssence{}
 	for i := mince; i <= ceLimit; i++ {
-		cePool = append(cePool, GetCombination(i, includeCe, excludeCe)...)
+		combs := GetCombination(i, includeCe, excludeCe)
+		if len(combs) == 1 {
+			comb := combs[0]
+			if len(comb) < i {
+				cePool = append(cePool, comb)
+				break
+			}
+		}
+		cePool = append(cePool, combs...)
 	}
 
 	log.Println("CE Pool: ", len(cePool))
