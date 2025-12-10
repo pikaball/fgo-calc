@@ -267,5 +267,29 @@
                 20
             ]
         ]
+    },
+    {
+        "id": 9311320,
+        "name": "英霊極点：アルトリア・ペンドラゴン",
+        "img": "https://static.atlasacademy.io/JP/EquipFaces/f_93113200.png",
+        "cost": 9,
+        "filters": [
+            [
+                [],
+                2
+            ]
+        ]
+    },
+    {
+        "id": 9311450,
+        "name": "英霊極点：マシュ・キリエライト",
+        "img": "https://static.atlasacademy.io/JP/EquipFaces/f_93114500.png",
+        "cost": 9,
+        "filters": [
+            [
+                [],
+                2
+            ]
+        ]
     }
 ]

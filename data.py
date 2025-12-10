@@ -17,12 +17,13 @@ def fetch_git_repo():
     try:
         if os.path.exists("chaldea-data"):
             os.chdir("chaldea-data")
-            os.system("git pull")
+            res = os.system("git pull")
             os.chdir("..")
         else:
-            os.system("git clone https://github.com/chaldea-center/chaldea-data")
-        open("update.txt", "w").write(str(int(time.time())))
-        print("Git repo fetched successfully.")
+            res = os.system("git clone https://github.com/chaldea-center/chaldea-data")
+        if res == 0: 
+            open("update.txt", "w").write(str(int(time.time())))
+            print("Git repo fetched successfully.")
     except Exception as e:
         print(f"Error fetching git repo: {e}")
         print("Retrying in 10 seconds...")

@@ -6,8 +6,9 @@ os.chdir('data')
 def translate(text, type):
     mapping = json.loads(open(f"names/{type}.json", "r").read())
     if str(text) in mapping:
-        return mapping[str(text)]
-    return None
+        if mapping[str(text)]:
+            return mapping[str(text)]
+    return str(text)
 
 ces = []
 
@@ -22,6 +23,7 @@ def find_ce(id):
 
 def get_ce(id, filters):
     raw = find_ce(id)
+    # print(raw['name'])
     return {
         "id": raw['id'],
         "name": translate(raw['name'], "ce"),
@@ -51,5 +53,9 @@ ce_data.append(get_ce(9403520, [([], 5)]))
 ce_data.append(get_ce(9401970, [([], 10)]))
 ce_data.append(get_ce(9400980, [([], -50)]))
 ce_data.append(get_ce(9408990, [([301, 2858], 20)]))
+ce_data.append(get_ce(9311320, [([], 2)]))
+ce_data.append(get_ce(9311450, [([], 2)]))
 
 open('ces.json','w').write(json.dumps(ce_data, ensure_ascii=False, indent=4))
+
+# print(get_ce(9311450, [([], 2)]))
